@@ -1,0 +1,13 @@
+Types of Function :
+
+Pure - Always return same o/p
+Total -  it always produce o/p
+partial = !total
+Deterministic : o/p should not get changed
+Non Determinstic : ! Deterministic
+side effect : Modifies the i/p within the function
+Referntial Transparency :
+
+MOney obj
+ x
+ x
