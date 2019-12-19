@@ -1,12 +1,6 @@
 package com.learning.functionalprogramminggradle.LambdaFunctions;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.function.*;
-
-@FunctionalInterface
+/*@FunctionalInterface
 interface Assistant<T>{
 
     public void takeNote(T input);
@@ -19,57 +13,55 @@ interface Assistant<T>{
         System.out.println("responding ...");
     }
 
-}
+}*/
 
-interface Bool {
-    Object choose(Object input1, Object input2);
-
-    Bool and(Bool input);
-}
-
-class True implements Bool{
-
-    public Object choose(Object input1, Object input2){
-        return input1;
-    }
-
-    public Bool and(Bool input) {
-
-        if (getClass().isInstance(input)) {
-            return this;
-        }else{
-            return input;
-        }
-    }
-
-    public String toString(){
-        return "True";
-    }
-}
-
-
-class False implements Bool{
-
-    public Object choose(Object input1, Object input2){
-        return input2;
-    }
-
-    public String toString(){
-        return "False";
-    }
-
-    public Bool and(Bool input){
-        return this;
-
-        //return False.class.isInstance(input);
-        //return "False";
-    }
-}
-
-
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiFunction;
 
 @FunctionalInterface
+interface Bool extends BiFunction<Bool, Bool, Bool> {
+
+    default Bool and(Bool other) {
+        return apply(other,this);
+    }
+
+    default Bool or(Bool other){
+        return apply(this,other);
+    }
+
+    default Bool not(){
+        return apply(False, True);
+    }
+
+    public static Bool True = new Bool(){
+
+        public Bool apply(Bool leftOperand, Bool rightOperand){
+            return leftOperand;
+        };
+
+        public String toString(){
+            return "True";
+        }
+    };
+
+   public static Bool False = new Bool(){
+
+        List list = new ArrayList();
+
+        public Bool apply(Bool leftOperand, Bool rightOperand){
+            return rightOperand;
+        }
+
+        public String toString(){
+            return "False";
+        }
+
+    };
+}
+
+
+/*@FunctionalInterface
 interface Merger<A,B, C, R>{
     public R merge(A first,B second,C third);
 }
@@ -77,24 +69,43 @@ interface Merger<A,B, C, R>{
 @FunctionalInterface
 interface  Sortable<I,C,R>{
     public R sort(I i, C c);
-}
+}*/
 
 
 class FPWorkshop {
 
     public static void main(String[] args) {
 
-        Bool True = new True();
-        System.out.println(True.toString());
-        Bool False= new False();
-        System.out.println(False.toString());
+        Bool True1 = Bool.True;
+        System.out.println(True1.toString());
+        Bool False1= Bool.False;
+        System.out.println(False1.toString());
 
-        System.out.println(False.and(False));
-        System.out.println(True.and(False));
-        System.out.println(False.and(True));
-        System.out.println(True.and(True));
+        System.out.println("True.choose(\"input\",\"input2\") = " + True1.apply(True1,False1));
+        System.out.println("False.choose(\"input\",\"input2\") = " + False1.apply(True1,False1));
 
-        System.out.println("init >>");
+
+        System.out.println("AND");
+        System.out.println(False1.and(False1));
+        System.out.println(True1.and(False1));
+        System.out.println(False1.and(True1));
+        System.out.println(True1.and(True1));
+
+       /* T T -> T
+        T F -> T
+        F T -> T
+        F F -> F*/
+        System.out.println("OR");
+        System.out.println(False1.or(False1));
+        System.out.println(True1.or(False1));
+        System.out.println(False1.or(True1));
+        System.out.println(True1.or(True1));
+
+        System.out.println("NOT");
+        System.out.println(False1.not());
+        System.out.println(True1.not());
+
+       /* System.out.println("init >>");
         Function<Integer, Integer> increment = x -> x + 247;
         System.out.println("increment.apply(5) = " + increment.apply(5));
         
@@ -133,8 +144,8 @@ class FPWorkshop {
             @Override
             public int compare(Integer i1, Integer i2) {
                 return i1 - i2;
-            }
-        }));
+            }s
+        }));*/
 
         System.out.println("Completed");
     }
