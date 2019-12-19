@@ -21,6 +21,54 @@ interface Assistant<T>{
 
 }
 
+interface Bool {
+    Object choose(Object input1, Object input2);
+
+    Bool and(Bool input);
+}
+
+class True implements Bool{
+
+    public Object choose(Object input1, Object input2){
+        return input1;
+    }
+
+    public Bool and(Bool input) {
+
+        if (getClass().isInstance(input)) {
+            return this;
+        }else{
+            return input;
+        }
+    }
+
+    public String toString(){
+        return "True";
+    }
+}
+
+
+class False implements Bool{
+
+    public Object choose(Object input1, Object input2){
+        return input2;
+    }
+
+    public String toString(){
+        return "False";
+    }
+
+    public Bool and(Bool input){
+        return this;
+
+        //return False.class.isInstance(input);
+        //return "False";
+    }
+}
+
+
+
+/*
 @FunctionalInterface
 interface Merger<A,B, C, R>{
     public R merge(A first,B second,C third);
@@ -30,11 +78,22 @@ interface Merger<A,B, C, R>{
 interface  Sortable<I,C,R>{
     public R sort(I i, C c);
 }
+*/
 
 class FPWorkshop {
 
     public static void main(String[] args) {
 
+        Bool True = new True();
+        System.out.println(True.toString());
+        Bool False= new False();
+        System.out.println(False.toString());
+
+        System.out.println(False.and(False));
+        System.out.println(True.and(False));
+        System.out.println(False.and(True));
+        System.out.println(True.and(True));
+        /*
         System.out.println("init >>");
         Function<Integer, Integer> increment = x -> x + 247;
         System.out.println("increment.apply(5) = " + increment.apply(5));
@@ -78,7 +137,7 @@ class FPWorkshop {
         }));
 
         System.out.println("Completed");
-
+*/
     }
 
 }
