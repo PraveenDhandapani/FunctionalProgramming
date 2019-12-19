@@ -68,7 +68,7 @@ class False implements Bool{
 
 
 
-/*
+
 @FunctionalInterface
 interface Merger<A,B, C, R>{
     public R merge(A first,B second,C third);
@@ -78,7 +78,7 @@ interface Merger<A,B, C, R>{
 interface  Sortable<I,C,R>{
     public R sort(I i, C c);
 }
-*/
+
 
 class FPWorkshop {
 
@@ -93,7 +93,7 @@ class FPWorkshop {
         System.out.println(True.and(False));
         System.out.println(False.and(True));
         System.out.println(True.and(True));
-        /*
+
         System.out.println("init >>");
         Function<Integer, Integer> increment = x -> x + 247;
         System.out.println("increment.apply(5) = " + increment.apply(5));
@@ -137,7 +137,6 @@ class FPWorkshop {
         }));
 
         System.out.println("Completed");
-*/
     }
 
 }
